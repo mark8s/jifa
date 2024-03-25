@@ -17,6 +17,7 @@ import org.eclipse.jifa.analysis.listener.DefaultProgressListener;
 import org.eclipse.jifa.common.domain.request.PagingRequest;
 import org.eclipse.jifa.common.domain.vo.PageView;
 import org.eclipse.jifa.tda.enums.ThreadType;
+import org.eclipse.jifa.tda.model.Thread;
 import org.eclipse.jifa.tda.vo.Content;
 import org.eclipse.jifa.tda.vo.Overview;
 import org.eclipse.jifa.tda.vo.VFrame;
@@ -36,7 +37,7 @@ public class TestAnalyzer extends TestBase {
         Assertions.assertEquals(o1, o2);
         Assertions.assertEquals(o1.hashCode(), o2.hashCode());
 
-        PageView<VThread> threads = tda.threads("main", ThreadType.JAVA, new PagingRequest(1, 1));
+        PageView<Thread> threads = tda.threads("main", ThreadType.JAVA, new PagingRequest(1, 1));
         Assertions.assertEquals(1, threads.getTotalSize());
 
         PageView<VFrame> frames = tda.callSiteTree(0, new PagingRequest(1, 16));

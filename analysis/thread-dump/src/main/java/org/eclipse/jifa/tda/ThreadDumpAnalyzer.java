@@ -166,13 +166,8 @@ public class ThreadDumpAnalyzer {
         });
     }
 
-    private PageView<VThread> buildVThreadPageView(List<Thread> threads, PagingRequest paging) {
-        return PageViewBuilder.build(threads, paging, thread -> {
-            VThread vThread = new VThread();
-            vThread.setId(thread.getId());
-            vThread.setName(thread.getName());
-            return vThread;
-        });
+    private PageView<Thread> buildVThreadPageView(List<Thread> threads, PagingRequest paging) {
+        return PageViewBuilder.build(threads, paging);
     }
 
     /**
@@ -181,7 +176,7 @@ public class ThreadDumpAnalyzer {
      * @param paging paging request
      * @return the threads filtered by name and type
      */
-    public PageView<VThread> threads(@ApiParameterMeta(required = false) String name,
+    public PageView<Thread> threads(@ApiParameterMeta(required = false) String name,
                                      @ApiParameterMeta(required = false) ThreadType type,
                                      PagingRequest paging) {
         List<Thread> threads = new ArrayList<>();
@@ -203,7 +198,7 @@ public class ThreadDumpAnalyzer {
      * @param paging    paging request
      * @return the threads filtered by group name and type
      */
-    public PageView<VThread> threadsOfGroup(String groupName, PagingRequest paging) {
+    public PageView<Thread> threadsOfGroup(String groupName, PagingRequest paging) {
         List<Thread> threads = snapshot.getThreadGroup().getOrDefault(groupName, Collections.emptyList());
         return buildVThreadPageView(threads, paging);
     }
@@ -283,7 +278,7 @@ public class ThreadDumpAnalyzer {
      * @param paging paging request
      * @return the threads by monitor id and state
      */
-    public PageView<VThread> threadsByMonitor(int id, MonitorState state, PagingRequest paging) {
+    public PageView<Thread> threadsByMonitor(int id, MonitorState state, PagingRequest paging) {
         Map<MonitorState, List<Thread>> map = snapshot.getMonitorThreads().get(id);
         if (map == null) {
             throw new IllegalArgumentException("Illegal monitor id: " + id);
